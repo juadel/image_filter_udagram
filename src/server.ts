@@ -1,6 +1,8 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
+import { BADQUERY } from 'dns';
+import { error } from 'util';
 
 
 (async () => {
@@ -18,26 +20,26 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   // GET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
 
-  app.get("/filteredimage", async (req , res) => {
+  app.get("/filteredimage", async (req : Request , res: Response) => {
     let {image_url} = req.query;
+    // Validating Img URL query.
     if (!image_url){
       return res.status(400).send('Image URL is required');
     }
-    const filteredImage = await filterImageFromURL(image_url);
-    res.status(200).sendFile(filteredImage);
-    //if (res.status(200)){
-
-    //await deleteLocalFiles([filteredImage]);
-    //}
-
-    //filterImageFromURL(image_url).then(filteredpath => {
-    //res.status(200).sendFile(filteredpath, () => {deleteLocalFiles([filteredpath]);} );
-      
     
+    let filteredImage : string;
+    //trying to handle Errors using and Try/Catch
+    try{
+      
+      filteredImage = await filterImageFromURL(image_url); // to filter the image
+      res.status(200).sendFile(filteredImage, () =>{deleteLocalFiles([filteredImage])}); // to delete old files on server
+    } catch(e){
+      console.error(e.message);
+      return res.status(415);
+    }
   
-  });
-
-  
+});
+  /*****************************************************************************/
   // IT SHOULD
   //    1
   //    1. validate the image_url query
