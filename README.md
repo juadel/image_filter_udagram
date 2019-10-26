@@ -1,5 +1,11 @@
-# Udagram Image Filtering Microservice
 
+## PERSONAL NOTES:
+-API URL :image-filter-udagram-dev.ca-central-1.elasticbeanstalk.com , endpoint "/filteredimage"
+- Tried to catch errors using try/catch but I am having problems to control UNHANDLE PROMISE REJECTIONS. That happend when the URL provide do not link to a valid IMAGE.
+- Also tried to add an endpoint in the feed.router.ts restapi, so only Authenticated user were able to filter the image, however, I was not able to handle the response. You can check what I tried in : https://github.com/juadel/udacity-c2-restApi
+
+
+# Udagram Image Filtering Microservice
 ## Tasks
 
 ### Setup Node Environment
