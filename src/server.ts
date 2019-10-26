@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
-import { BADQUERY } from 'dns';
-import { error } from 'util';
+
+
 
 
 (async () => {
@@ -23,21 +23,20 @@ import { error } from 'util';
   app.get("/filteredimage", async (req : Request , res: Response) => {
     let {image_url} = req.query;
     // Validating Img URL query.
-    if (!image_url){
-      return res.status(400).send('Image URL is required');
-    }
-    
+   if (!image_url){
+     return res.status(400).send('Image URL is required');
+   }
+   console.log("URL is Valid")
     let filteredImage : string;
-    //trying to handle Errors using and Try/Catch
-    try{
-      
+   //trying to handle Errors using and Try/Catch
+    try{      
       filteredImage = await filterImageFromURL(image_url); // to filter the image
-      res.status(200).sendFile(filteredImage, () =>{deleteLocalFiles([filteredImage])}); // to delete old files on server
-    } catch(e){
+      res.status(200).sendFile(filteredImage, () =>{deleteLocalFiles([filteredImage])}); // returning the filtered image and to delete old files on server
+    }catch(e){
       console.error(e.message);
-      return res.status(415);
+      return res.status(415); // to control errors - Note: Still getting UNHANDLE PROMISE REJECTION WARNING when the URL is not a Valid image.
     }
-  
+    console.log('Process completed');
 });
   /*****************************************************************************/
   // IT SHOULD
