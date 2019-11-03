@@ -31,7 +31,13 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
    //trying to handle Errors using and Try/Catch
     try{      
       filteredImage = await filterImageFromURL(image_url); // to filter the image
+      console.log(filteredImage);
+      if (filteredImage==="error"){
+        res.status(415).send('URL is not an Image');
+      }
+      else{
       res.status(200).sendFile(filteredImage, () =>{deleteLocalFiles([filteredImage])}); // returning the filtered image and to delete old files on server
+      }
     }catch(e){
       console.error(e.message);
       return res.status(415); // to control errors - Note: Still getting UNHANDLE PROMISE REJECTION WARNING when the URL is not a Valid image.
