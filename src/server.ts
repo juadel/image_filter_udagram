@@ -32,7 +32,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
     try{      
       filteredImage = await filterImageFromURL(image_url); // to filter the image
       console.log(filteredImage);
-      if (filteredImage==="error"){
+      if (filteredImage==="error"){ //checking if there is an error in filterImageFromURL
         res.status(415).send('URL is not an Image');
       }
       else{
@@ -40,7 +40,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
       }
     }catch(e){
       console.error(e.message);
-      return res.status(415); // to control errors - Note: Still getting UNHANDLE PROMISE REJECTION WARNING when the URL is not a Valid image.
+      return res.status(415); // to control errors - 
     }
     console.log('Process completed');
 });

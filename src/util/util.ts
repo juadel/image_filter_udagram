@@ -24,9 +24,9 @@ export async function filterImageFromURL(inputURL: string): Promise<string>{
             });
         }catch(e){
             console.error(e.message);
-            //console.log("errrorororor");
+            
             resolve("error");
-            //return inputURL;
+            
         }  
         
     });
